@@ -1,0 +1,29 @@
+// =====================================================================================================================
+// Name: Style.scss
+// Description: This program allows the use of images in the .html file
+// Compiler: None.
+// Usage: Customization
+// Restriction(s): None.
+// History: 05/13/2024 | E. Zoukou / K. Niamba / Creation;
+//          1/28/2025 | K. Niamba / Modification ---> Documentation translation (FR to ENG);
+// =====================================================================================================================
+
+html{
+    /* Sets the background of the webpage using our jungle image */
+    background-image: url('cartoon-jungle-background_52683-61450.jpg');
+    background-size: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html{
+    /* Sets the mouse cursor to our banana image */
+    cursor: pointer;
+    cursor: url('pointer_1590.png'), auto;
+}
+
+button:hover {  
+    /* Sets the mouse cursor to our peeled banana image when hovering over the button */
+    cursor: pointer;
+    cursor: url('pointer_1589.png'), auto;
+}
