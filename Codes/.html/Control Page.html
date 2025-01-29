@@ -1,0 +1,121 @@
+<!-- =====================================================================================================================
+= Name: Style.scss
+= Description: This program uses the HTML file as the control panel
+= Compiler: None.
+= Usage: Conotrol panel
+= Restriction(s): None.
+= History: History: 05/13/2024 | K. Niamba / Creation;
+=          1/28/2025 | K. Niamba / Modification -> Documentation translation (FR to ENG)
+=                                               -> The .css file has been updaded to a scss file;
+= ===================================================================================================================== --->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Control Page</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='Style.scss')}}">
+    
+    <style>
+
+    /* --------------------------------------------------- */
+    /* Styles for the body of the page */
+    /* --------------------------------------------------- */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+    /* --------------------------------------------------- */
+    /* Styles for the temperature section */
+    /* --------------------------------------------------- */
+        section {
+            margin-bottom: 20px;
+            border: 5px solid #2E8B57;
+            padding: 20px;
+            font-size: 25px;
+            border-radius: 20px;
+            background-color: #AFE1AF;
+            text-align: center;
+        }
+
+    /* --------------------------------------------------- */        
+    /* Styles for the buttons */
+    /* --------------------------------------------------- */
+        button {
+            margin: 5px;
+            border: 5px solid #2E8B57;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 20px;
+            background-color: #AFE1AF;
+            font-family: Arial, serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+ 
+<body>
+    <section>
+    <!-- --------------------------------------------------- -->
+    <!-- Display of the temperature -->
+    <!-- --------------------------------------------------- -->
+        <h1>Temperature</h1>
+        <div id="temperature"></div>
+    </section>
+
+    <!-- --------------------------------------------------- -->
+    <!-- JavaScript script to retrieve and display the temperature -->
+    <!-- --------------------------------------------------- -->
+    <script>
+        function updateTemperature(){
+            fetch('/temp')                   /* Sends a request to the server to get the temperature */
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("temperature").innerText = "\t" + data + "°C";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        updateTemperature();
+        setInterval(updateTemperature, 500); /* Update the temperature every 500 milliseconds */
+    </script>
+
+    <form id="ledForm">
+        <button type="button" onclick="controlLED('on')"><h1>Turn On</h1></button>
+        <button type="button" onclick="controlLED('off')"><h1>Turn Off</h1></button>
+    </form>
+
+    <!-- --------------------------------------------------- -->
+    <!-- JavaScript script to control the LED -->
+    <!-- --------------------------------------------------- -->
+    <script>
+        function controlLED(action) {
+            $.ajax({                         /* Sends an AJAX request to the server to control the LED */
+                url: '/led',
+                type: 'POST',
+                data: { action: action },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
